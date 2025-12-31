@@ -146,7 +146,7 @@ flowchart TD
 
 - Recognition accuracy and duplicate prevention (separate from throughput)
   - Solution: Structured extraction (JSON mode) feeding candidate retrieval with lightweight heuristic scoring; optional vision re‑ranking among top‑K image candidates with confidence gating; exact‑match DB lookup by `langId`; and “withhold on ambiguity” to avoid incorrect saves. Local DB dedupe prevents duplicates; user‑facing messages localize OCR errors.
-  - Impact: Coverage ≈ 97%, conditional Accuracy@1 ≈ 99%; evaluated on 300 manually-labeled queries (100 each in EN/JA/ZH).
+  - Impact: Coverage ≈ 97%, conditional Accuracy@1 ≈ 99%; on 300 held-out DB images (random sample 100 for each language), downscaled to ~300×400.
 
 - Multilingual data normalization and search quality
   - Solution: Offline ingestion and normalization of card data across languages with deterministic canonical IDs, conflict detection/resolution rules, and idempotent, repeatable scripts/tests to keep the dataset consistent.
@@ -157,7 +157,7 @@ flowchart TD
   - Impact: Reduced attack surface, protected user data at rest/in transit, predictable resource usage under load, and fast recovery (RPO ≈ 4h).
 
 ## Results & Metrics (internal testing)
-- OCR accuracy: Precision ≈ 99%, Recall ≈ 97% (test set) 
+- OCR accuracy: Coverage ≈ 97%, conditional Accuracy@1 ≈ 99%; on 300 random sampled DB images, downscaled to ~300×400.
 - Latency: Single card ~4–8s; 20‑card batch ~20–40s with ~20–30 Mbps uplink
 - Backups: Encrypted every 4 hours; 7/4/12 retention strategy (daily/weekly/monthly)
 - Distribution: Internal TestFlight builds used for testing
